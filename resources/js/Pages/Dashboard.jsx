@@ -1,10 +1,10 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, useForm} from '@inertiajs/react';
 import { Plus, X } from "lucide-react";
 import { useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
-export default function Dashboard({ auth, assessments }) {
+export default function Dashboard({ auth, assessments  }) {
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState(1);
   const [isChecked, setIsChecked] = useState(false);
@@ -19,6 +19,8 @@ export default function Dashboard({ auth, assessments }) {
   const [showQualification2, setShowQualification2] = useState(false);
   const [showQualification3, setShowQualification3] = useState(false);
   const [showQualification4, setShowQualification4] = useState(false);
+
+
 
   const [pdfFile, setPdfFile] = useState(null);
   const [pdfFile2, setPdfFile2] = useState(null);
@@ -99,13 +101,55 @@ export default function Dashboard({ auth, assessments }) {
     }
   };
 
-  
+  const { data, setData, post, processing, errors, reset } = useForm({
+    assessment_date: '',
+    qualification: '',
+    no_of_pax: '',
+    trainingStatus: '',
+   type_of_scholar: '',
+   type_of_non_scholar: '',
+    qualification2: null,
+    no_of_pax2: null,
+    trainingStatus2: null,
+    type_of_scholar2: null,
+    type_of_non_scholar2: null,
+    qualification3: null,
+    no_of_pax3:null,
+    trainingStatus3:null,
+    type_of_scholar3: null,
+   type_of_non_scholar3:null,
+    qualification4:null,
+    no_of_pax4: null,
+    trainingStatus4: null,
+    type_of_scholar4:null,
+    type_of_non_scholar4: null,
+    ellt: null,
+    rfftp: null,
+    oropfafns: null,
+    sopcctvr: null,
+    ellt2: null,
+    rfftp2: null,
+    oropfafns2: null,
+    sopcctvr2: null,
+    ellt3: null,
+    rfftp3: null,
+    oropfafns3: null,
+    sopcctvr3: null,
+    ellt4: null,
+    rfftp4: null,
+    oropfafns4: null,
+    sopcctvr4: null,
+});
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    alert("Form submitted!"); // Replace with actual submission logic
-    closeModal();
-  }
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+  console.log("Form submitted", data); // Debugging output
+  post(route('assessments.store'), {
+      onSuccess: () => console.log("Form successfully posted"),
+      onError: (error) => console.log("Form submission error:", error),
+  });
+};
 
   return (
     <AuthenticatedLayout
@@ -147,7 +191,7 @@ export default function Dashboard({ auth, assessments }) {
           <tbody className="bg-white divide-y divide-gray-200">
             {assessments.data.map((assessment) => (
               <tr key={assessment.id}>
-                <td className="px-6 py-4 whitespace-nowrap">{assessment.name}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{assessment.user.name}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{assessment.title}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${

@@ -4,7 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Models\Assessment; // Ensure this is at the top
+use App\Http\Controllers\AssessmentController;
+use App\Models\Assessment;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,9 @@ use App\Models\Assessment; // Ensure this is at the top
 |
 */
 
+Route::post('/assessments/store', [AssessmentController::class, 'store'])->name('assessments.store');
+
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -25,6 +29,8 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+
 
 Route::get('/dashboard', function () {
     $assessments = Assessment::paginate(10); // 10 items per page

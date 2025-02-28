@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Assessment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
+
 
 class AssessmentController extends Controller
 {
@@ -227,7 +229,7 @@ if ($request->training_status4 == 'scholar' && !$request->hasFile('oropfafns4'))
 
         $assessment->save();
 
-        return redirect()->route('dashboard')->with('success', 'Assessment created successfully!');
+        return Redirect::route('dashboard')->with('success', 'Assessment created successfully!');
     }
 
 
@@ -243,7 +245,7 @@ if ($request->training_status4 == 'scholar' && !$request->hasFile('oropfafns4'))
         $assessment = Assessment::findOrFail($id);
         $assessment->status = $request->status;
         $assessment->save();
-        return redirect()->route('dashboard')->with('success', 'Assessment created successfully!');
+        return Redirect::route('dashboard')->with('success', 'Assessment created successfully!');
 
     }
 
@@ -253,7 +255,7 @@ if ($request->training_status4 == 'scholar' && !$request->hasFile('oropfafns4'))
     public function destroy(Assessment $assessment)
     {
         $assessment->delete();
-        return redirect()->route('assessments.index')->with('success', 'Assessment deleted successfully!');
+        return Redirect::route('dashboard')->with('success', 'Assessment created successfully!');
     }
 }
 
