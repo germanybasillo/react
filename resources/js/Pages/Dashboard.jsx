@@ -3,6 +3,7 @@ import { Head, Link, useForm} from '@inertiajs/react';
 import { Plus, X } from "lucide-react";
 import { useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import PrimaryButton from '@/Components/PrimaryButton';
 
 export default function Dashboard({ auth, assessments  }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -101,11 +102,11 @@ export default function Dashboard({ auth, assessments  }) {
     }
   };
 
-  const { data, setData, post, processing, errors, reset } = useForm({
+  const { data, setData, post, processing} = useForm({
     assessment_date: '',
-    qualification: '',
+    qualification: '', // Ensure it starts as an empty string, not null
     no_of_pax: '',
-    trainingStatus: '',
+    training_status: '',
    type_of_scholar: '',
    type_of_non_scholar: '',
     qualification2: null,
@@ -123,10 +124,10 @@ export default function Dashboard({ auth, assessments  }) {
     trainingStatus4: null,
     type_of_scholar4:null,
     type_of_non_scholar4: null,
-    ellt: null,
-    rfftp: null,
+    ellt: '',
+    rfftp: '',
     oropfafns: null,
-    sopcctvr: null,
+    sopcctvr: '',
     ellt2: null,
     rfftp2: null,
     oropfafns2: null,
@@ -250,15 +251,15 @@ const handleSubmit = (e) => {
 
                       <div className="mb-3">
                         <label className="block text-gray-700">Desired Date of Assessment:</label>
-                        <input type="date" name="assessment_date" className="mt-1 p-2 border rounded-lg w-full" />
+                        <input type="date" name="assessment_date" value={data.assessment_date}  onChange={(e) => setData('assessment_date', e.target.value)} className="mt-1 p-2 border rounded-lg w-full" />
                       </div>
 
                       <div className="mb-3">
                         <label className="block text-gray-700">Qualification:</label>
                         <select
           name="qualification"
-          value={selectedQualification}
-          onChange={(e) => setSelectedQualification(e.target.value)}
+          value={data.qualification}
+          onChange={(e) => setData('qualification',e.target.value)}
           className="mt-1 p-2 border rounded-lg w-full"
         >
                           <option value="" disabled>
@@ -273,7 +274,7 @@ const handleSubmit = (e) => {
 
                       <div className="mb-3">
                         <label className="block text-gray-700">Number of Pax:</label>
-                        <select name="no_of_pax" defaultValue="" className="mt-1 p-2 border rounded-lg w-full">
+                        <select name="no_of_pax" value={data.no_of_pax}  onChange={(e) => setData('no_of_pax', e.target.value)} defaultValue="" className="mt-1 p-2 border rounded-lg w-full">
                           <option value="" disabled hidden>
                             Select your number of pax
                           </option>
@@ -289,8 +290,8 @@ const handleSubmit = (e) => {
                         <label className="block text-gray-700">Training Status:</label>
                         <select
                           name="training_status"
-                          value={trainingStatus}
-                          onChange={(e) => setTrainingStatus(e.target.value)}
+                          value={data.training_status}
+                          onChange={(e) => setData('training_status',e.target.value)}
                           className="mt-1 p-2 border rounded-lg w-full"
                         >
                           <option value="" disabled>
@@ -301,10 +302,11 @@ const handleSubmit = (e) => {
                         </select>
                       </div>
 
-                      {trainingStatus === "scholar" && (
+                      {data.training_status === "scholar" && (
                         <div className="mb-3">
                           <label className="block text-gray-700">Scholarship Type:</label>
-                          <select name="type_of_scholar" defaultValue="" className="mt-1 p-2 border rounded-lg w-full">
+                          <select name="type_of_scholar" value={data.type_of_scholar}
+                          onChange={(e) => setData('type_of_scholar',e.target.value)} defaultValue="" className="mt-1 p-2 border rounded-lg w-full">
                             <option value="" disabled>
                               Select your scholarship type
                             </option>
@@ -316,10 +318,11 @@ const handleSubmit = (e) => {
                         </div>
                       )}
 
-                      {trainingStatus === "non-scholar" && (
+                      {data.training_status === "non-scholar" && (
                         <div className="mb-3">
                           <label className="block text-gray-700">Non Scholarship Type:</label>
-                          <select name="type_of_scholar" defaultValue="" className="mt-1 p-2 border rounded-lg w-full">
+                          <select name="type_of_non_scholar" value={data.type_of_non_scholar}
+                          onChange={(e) => setData('type_of_non_scholar',e.target.value)} defaultValue="" className="mt-1 p-2 border rounded-lg w-full">
                             <option value="" disabled>
                               Select your non scholarship type
                             </option>
@@ -645,7 +648,7 @@ const handleSubmit = (e) => {
       <label className="block text-gray-700 mb-1">Endorsement Letter To TESDA:</label>
       <input
         type="file"
-        name="ellt"
+        name="ellt" 
         accept="application/pdf"
         className="p-2 border rounded-lg w-full"
         onChange={handleFileChange}
@@ -941,12 +944,12 @@ const handleSubmit = (e) => {
                         >
                           Back
                         </button>
-                        <button
+                        <PrimaryButton
                           type="submit"
-                          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600" disabled={processing}
                         >
                           Submit
-                        </button>
+                        </PrimaryButton>
                       </div>
                     </div>
                   )}

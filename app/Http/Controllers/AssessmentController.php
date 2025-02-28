@@ -20,11 +20,11 @@ class AssessmentController extends Controller
  
         $request->validate([
             'assessment_date' => 'required|date|after_or_equal:today',
-            'qualification' => 'nullable|string|max:255',
+            'qualification' => 'required|string|max:255',
             'qualification2' => 'nullable|string|max:255',
             'qualification3' => 'nullable|string|max:255',
             'qualification4' => 'nullable|string|max:255',
-            'no_of_pax' => 'nullable|integer',
+            'no_of_pax' => 'required|integer',
             'no_of_pax2' => 'nullable|integer',
             'no_of_pax3' => 'nullable|integer',
             'no_of_pax4' => 'nullable|integer',
