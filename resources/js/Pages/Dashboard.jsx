@@ -12,11 +12,18 @@ export default function Dashboard({ auth, assessments }) {
   const [trainingStatus2, setTrainingStatus2] = useState("");
   const [trainingStatus3, setTrainingStatus3] = useState("");
   const [trainingStatus4, setTrainingStatus4] = useState("");
+  const [selectedQualification, setSelectedQualification] = useState("");
+  const [selectedQualification2, setSelectedQualification2] = useState("");
+  const [selectedQualification3, setSelectedQualification3] = useState("");
+  const [selectedQualification4, setSelectedQualification4] = useState("");
   const [showQualification2, setShowQualification2] = useState(false);
   const [showQualification3, setShowQualification3] = useState(false);
   const [showQualification4, setShowQualification4] = useState(false);
 
   const [pdfFile, setPdfFile] = useState(null);
+  const [pdfFile2, setPdfFile2] = useState(null);
+  const [pdfFile3, setPdfFile3] = useState(null);
+  const [pdfFile4, setPdfFile4] = useState(null);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -28,6 +35,42 @@ export default function Dashboard({ auth, assessments }) {
       alert('Please select a PDF file.');
     }
   };
+
+  const handleFileChange2 = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type === 'application/pdf') {
+      const fileURL = URL.createObjectURL(file);
+      setPdfFile2(fileURL);
+    } else {
+      setPdfFile2(null);
+      alert('Please select a PDF file.');
+    }
+  };
+
+  const handleFileChange3 = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type === 'application/pdf') {
+      const fileURL = URL.createObjectURL(file);
+      setPdfFile3(fileURL);
+    } else {
+      setPdfFile3(null);
+      alert('Please select a PDF file.');
+    }
+  };
+
+  const handleFileChange4 = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type === 'application/pdf') {
+      const fileURL = URL.createObjectURL(file);
+      setPdfFile4(fileURL);
+    } else {
+      setPdfFile4(null);
+      alert('Please select a PDF file.');
+    }
+  };
+
+
+
 
   function openModal() {
     setIsOpen(true);
@@ -145,6 +188,8 @@ export default function Dashboard({ auth, assessments }) {
           <div className="fixed inset-0 bg-black bg-opacity-50"></div>
           <div className="fixed inset-0 overflow-y-auto">
             <div className="flex items-center justify-center min-h-screen p-4">
+              
+              
             <Dialog.Panel className="bg-white p-6 rounded-lg shadow-lg w-1/2 max-w-3xl">
 
                 <div className="flex justify-between items-center mb-4">
@@ -166,7 +211,12 @@ export default function Dashboard({ auth, assessments }) {
 
                       <div className="mb-3">
                         <label className="block text-gray-700">Qualification:</label>
-                        <select name="qualification" defaultValue="" className="mt-1 p-2 border rounded-lg w-full">
+                        <select
+          name="qualification"
+          value={selectedQualification}
+          onChange={(e) => setSelectedQualification(e.target.value)}
+          className="mt-1 p-2 border rounded-lg w-full"
+        >
                           <option value="" disabled>
                             Select your qualification
                           </option>
@@ -243,7 +293,12 @@ export default function Dashboard({ auth, assessments }) {
                         <div className="mt-4">
                           <div className="mb-3">
                             <label className="block text-gray-700">Qualification 2:</label>
-                            <select name="qualification2" defaultValue="" className="mt-1 p-2 border rounded-lg w-full">
+                            <select
+          name="qualification2"
+          value={selectedQualification2}
+          onChange={(e) => setSelectedQualification2(e.target.value)}
+          className="mt-1 p-2 border rounded-lg w-full"
+        >
                               <option value="" disabled>
                                 Select your qualification 2
                               </option>
@@ -321,7 +376,12 @@ export default function Dashboard({ auth, assessments }) {
                         <div className="mt-4">
                           <div className="mb-3">
                             <label className="block text-gray-700">Qualification 3:</label>
-                            <select name="qualification3" defaultValue="" className="mt-1 p-2 border rounded-lg w-full">
+                            <select
+          name="qualification3"
+          value={selectedQualification3}
+          onChange={(e) => setSelectedQualification3(e.target.value)}
+          className="mt-1 p-2 border rounded-lg w-full"
+        >
                               <option value="" disabled>
                                 Select your qualification 3
                               </option>
@@ -399,7 +459,12 @@ export default function Dashboard({ auth, assessments }) {
                         <div className="mt-4">
                           <div className="mb-3">
                             <label className="block text-gray-700">Qualification 4:</label>
-                            <select name="qualification4" defaultValue="" className="mt-1 p-2 border rounded-lg w-full">
+                            <select
+          name="qualification4"
+          value={selectedQualification4}
+          onChange={(e) => setSelectedQualification4(e.target.value)}
+          className="mt-1 p-2 border rounded-lg w-full"
+        >
                               <option value="" disabled>
                                 Select your qualification 4
                               </option>
@@ -519,6 +584,15 @@ export default function Dashboard({ auth, assessments }) {
                           <input type="file" name={`file${index + 5}`} className="mt-1 p-2 border rounded-lg w-full" />
                         </div>
                       ))} */}
+    
+    <div id="qualificationTitle" className="mt-4 text-lg font-semibold text-gray-800">
+        <h2>
+          {selectedQualification
+            ? `Provide PDF for ${selectedQualification}`
+            : "Please upload your document here (PDF)"}
+        </h2>
+      </div>
+  
 
 <div className="p-4 flex flex-col lg:flex-row gap-6">
   {/* Form Section */}
@@ -567,20 +641,241 @@ export default function Dashboard({ auth, assessments }) {
       />
     </div>
   </div>
+  
 
   {/* PDF Preview Section */}
   <div className="w-full lg:w-1/2 p-4 bg-blue-500 shadow-md rounded-lg">
-  <h2 className="text-lg font-semibold text-white mb-2">PDF Preview:</h2>
+  <h2 className="text-lg font-semibold text-white mb-2">PDF Preview Here:</h2>
   {pdfFile && (
       <embed
         src={pdfFile}
         type="application/pdf"
-        className="w-full h-[400px] lg:h-[600px] border rounded-lg"
+        className="w-full h-[400px] lg:h-[330px] border rounded-lg"
       />
    
   )}
     </div>
 </div>
+
+
+
+<div id="qualificationTitle2" className="mt-4 text-lg font-semibold text-gray-800">
+        <h2>
+          {selectedQualification2
+            ? `Provide PDF for ${selectedQualification2}`
+            : "Please upload your document here (PDF)"}
+        </h2>
+      </div>
+  
+
+<div className="p-4 flex flex-col lg:flex-row gap-6">
+  {/* Form Section */}
+  <div className="w-full lg:w-1/2 flex flex-col gap-4">
+    <div className="flex flex-col">
+      <label className="block text-gray-700 mb-1">Endorsement Letter To TESDA 2:</label>
+      <input
+        type="file"
+        name="ellt2"
+        accept="application/pdf"
+        className="p-2 border rounded-lg w-full"
+        onChange={handleFileChange2}
+      />
+    </div>
+
+    <div className="flex flex-col">
+      <label className="block text-gray-700 mb-1">Request Form For Test Package 2:</label>
+      <input
+        type="file"
+        name="rfftp2"
+        accept="application/pdf"
+        className="p-2 border rounded-lg w-full"
+        onChange={handleFileChange2}
+      />
+    </div>
+
+    <div className="flex flex-col">
+      <label className="block text-gray-700 mb-1">Official Receipt of Payment for Assessment for Non-Scholar 2:</label>
+      <input
+        type="file"
+        name="oropfafns2"
+        accept="application/pdf"
+        className="p-2 border rounded-lg w-full"
+        onChange={handleFileChange2}
+      />
+    </div>
+
+    <div className="flex flex-col">
+      <label className="block text-gray-700 mb-1">Submission of Previous CCTV Recordings 2:</label>
+      <input
+        type="file"
+        name="sopcctvr2"
+        accept="application/pdf"
+        className="p-2 border rounded-lg w-full"
+        onChange={handleFileChange2}
+      />
+    </div>
+  </div>
+  
+
+  {/* PDF Preview Section */}
+  <div className="w-full lg:w-1/2 p-4 bg-blue-500 shadow-md rounded-lg">
+  <h2 className="text-lg font-semibold text-white mb-2">PDF Preview Here 2:</h2>
+  {pdfFile2 && (
+      <embed
+        src={pdfFile2}
+        type="application/pdf"
+        className="w-full h-[400px] lg:h-[330px] border rounded-lg"
+      />
+   
+  )}
+    </div>
+</div>
+
+<div id="qualificationTitle3" className="mt-4 text-lg font-semibold text-gray-800">
+        <h2>
+          {selectedQualification3
+            ? `Provide PDF for ${selectedQualification3}`
+            : "Please upload your document here (PDF)"}
+        </h2>
+      </div>
+  
+
+<div className="p-4 flex flex-col lg:flex-row gap-6">
+  {/* Form Section */}
+  <div className="w-full lg:w-1/2 flex flex-col gap-4">
+    <div className="flex flex-col">
+      <label className="block text-gray-700 mb-1">Endorsement Letter To TESDA 3:</label>
+      <input
+        type="file"
+        name="ellt3"
+        accept="application/pdf"
+        className="p-2 border rounded-lg w-full"
+        onChange={handleFileChange3}
+      />
+    </div>
+
+    <div className="flex flex-col">
+      <label className="block text-gray-700 mb-1">Request Form For Test Package 3:</label>
+      <input
+        type="file"
+        name="rfftp3"
+        accept="application/pdf"
+        className="p-2 border rounded-lg w-full"
+        onChange={handleFileChange3}
+      />
+    </div>
+
+    <div className="flex flex-col">
+      <label className="block text-gray-700 mb-1">Official Receipt of Payment for Assessment for Non-Scholar 3:</label>
+      <input
+        type="file"
+        name="oropfafns3"
+        accept="application/pdf"
+        className="p-2 border rounded-lg w-full"
+        onChange={handleFileChange3}
+      />
+    </div>
+
+    <div className="flex flex-col">
+      <label className="block text-gray-700 mb-1">Submission of Previous CCTV Recordings 3:</label>
+      <input
+        type="file"
+        name="sopcctvr3"
+        accept="application/pdf"
+        className="p-2 border rounded-lg w-full"
+        onChange={handleFileChange3}
+      />
+    </div>
+  </div>
+  
+
+  {/* PDF Preview Section */}
+  <div className="w-full lg:w-1/2 p-4 bg-blue-500 shadow-md rounded-lg">
+  <h2 className="text-lg font-semibold text-white mb-2">PDF Preview Here 3:</h2>
+  {pdfFile3 && (
+      <embed
+        src={pdfFile3}
+        type="application/pdf"
+        className="w-full h-[400px] lg:h-[330px] border rounded-lg"
+      />
+   
+  )}
+    </div>
+</div>
+
+<div id="qualificationTitle4" className="mt-4 text-lg font-semibold text-gray-800">
+        <h2>
+          {selectedQualification4
+            ? `Provide PDF for ${selectedQualification4}`
+            : "Please upload your document here (PDF)"}
+        </h2>
+      </div>
+  
+
+<div className="p-4 flex flex-col lg:flex-row gap-6">
+  {/* Form Section */}
+  <div className="w-full lg:w-1/2 flex flex-col gap-4">
+    <div className="flex flex-col">
+      <label className="block text-gray-700 mb-1">Endorsement Letter To TESDA 4t:</label>
+      <input
+        type="file"
+        name="ellt4"
+        accept="application/pdf"
+        className="p-2 border rounded-lg w-full"
+        onChange={handleFileChange4}
+      />
+    </div>
+
+    <div className="flex flex-col">
+      <label className="block text-gray-700 mb-1">Request Form For Test Package 4:</label>
+      <input
+        type="file"
+        name="rfftp4"
+        accept="application/pdf"
+        className="p-2 border rounded-lg w-full"
+        onChange={handleFileChange4}
+      />
+    </div>
+
+    <div className="flex flex-col">
+      <label className="block text-gray-700 mb-1">Official Receipt of Payment for Assessment for Non-Scholar 4:</label>
+      <input
+        type="file"
+        name="oropfafns4"
+        accept="application/pdf"
+        className="p-2 border rounded-lg w-full"
+        onChange={handleFileChange4}
+      />
+    </div>
+
+    <div className="flex flex-col">
+      <label className="block text-gray-700 mb-1">Submission of Previous CCTV Recordings 4:</label>
+      <input
+        type="file"
+        name="sopcctvr4"
+        accept="application/pdf"
+        className="p-2 border rounded-lg w-full"
+        onChange={handleFileChange4}
+      />
+    </div>
+  </div>
+  
+
+  {/* PDF Preview Section */}
+  <div className="w-full lg:w-1/2 p-4 bg-blue-500 shadow-md rounded-lg">
+  <h2 className="text-lg font-semibold text-white mb-2">PDF Preview Here 4:</h2>
+  {pdfFile4 && (
+      <embed
+        src={pdfFile4}
+        type="application/pdf"
+        className="w-full h-[400px] lg:h-[330px] border rounded-lg"
+      />
+   
+  )}
+    </div>
+</div>
+
+  
 
   
 
