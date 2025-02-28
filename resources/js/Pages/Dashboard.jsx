@@ -4,6 +4,7 @@ import { Plus, X } from "lucide-react";
 import { useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import PrimaryButton from '@/Components/PrimaryButton';
+import { usePage } from '@inertiajs/react';
 
 export default function Dashboard({ auth, assessments  }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -143,12 +144,47 @@ export default function Dashboard({ auth, assessments  }) {
 });
 
 
+// const handleSubmit = (e) => {
+//   e.preventDefault();
+//   console.log("Form submitted", data); // Debugging output
+//   post(route('assessments.store'), {
+//       onSuccess: () => console.log("Form successfully posted"),
+//       onError: (error) => console.log("Form submission error:", error),
+//   });
+// };
+
+const { flash } = usePage().props;
+
+<div>
+    {flash?.success && (
+      <div className="bg-green-500 text-white p-2 rounded">
+        {flash.success}
+      </div>
+    )}
+
+    {flash?.error && (
+      <div className="bg-red-500 text-white p-2 rounded">
+        {flash.error}
+      </div>
+    )}
+  </div>
+
 const handleSubmit = (e) => {
   e.preventDefault();
-  console.log("Form submitted", data); // Debugging output
+  
   post(route('assessments.store'), {
-      onSuccess: () => console.log("Form successfully posted"),
-      onError: (error) => console.log("Form submission error:", error),
+    onSuccess: () => {
+      console.log("Form successfully posted");
+      // Set a flash message and reload the page
+      Inertia.visit(route('dashboard'), {
+        method: 'get',
+        preserveScroll: true,
+        only: ['flash'],
+      });
+    },
+    onError: (error) => {
+      console.log("Form submission error:", error);
+    },
   });
 };
 
@@ -179,7 +215,7 @@ const handleSubmit = (e) => {
         <table className="min-w-full divide-y divide-blue-200">
           <thead className="bg-white border border-blue-700 shadow-lg">
             <tr>
-              {["Name", "Title", "Status", "Role", "Email", "Actions"].map((heading) => (
+              {[ "Qualification", "Status", "No of Pax", "Type of Scholar", "Actions"].map((heading) => (
                 <th
                   key={heading}
                   className="px-6 py-3 text-left text-xs font-large text-blue-500 uppercase tracking-wider"
@@ -192,17 +228,19 @@ const handleSubmit = (e) => {
           <tbody className="bg-white divide-y divide-gray-200">
             {assessments.data.map((assessment) => (
               <tr key={assessment.id}>
-                <td className="px-6 py-4 whitespace-nowrap">{assessment.user.name}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{assessment.title}</td>
+                {/* <td className="px-6 py-4 whitespace-nowrap">{assessment.user.name}</td> */}
+                <td className="px-6 py-4 whitespace-nowrap">{assessment.qualification}
+                {assessment.qualification2}
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                    assessment.status === "Active" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+                    assessment.status === "pending" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
                   }`}>
                     {assessment.status}
                   </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">{assessment.role}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{assessment.email}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{assessment.no_of_pax}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{assessment.type_of_non_scholar}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <Link href={`/assessments/${assessment.id}/edit`} className="text-indigo-600 hover:text-indigo-900">Edit</Link>
                   <Link href={`/assessments/${assessment.id}/delete`} className="ml-2 text-red-600 hover:text-red-900">Delete</Link>

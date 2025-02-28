@@ -36,11 +36,11 @@ return new class extends Migration
         $table->string('type_of_non_scholar2')->default('N/A')->nullable();
         $table->string('type_of_non_scholar3')->default('N/A')->nullable();
         $table->string('type_of_non_scholar4')->default('N/A')->nullable();
-		$table->string('eltt');
+		$table->string('eltt')->nullable();
         $table->string('eltt2')->default('N/A')->nullable();
         $table->string('eltt3')->default('N/A')->nullable();
         $table->string('eltt4')->default('N/A')->nullable();    
-		$table->string('rfftp');
+		$table->string('rfftp')->nullable();
         $table->string('rfftp2')->default('N/A')->nullable();
         $table->string('rfftp3')->default('N/A')->nullable();
         $table->string('rfftp4')->default('N/A')->nullable();
@@ -48,7 +48,7 @@ return new class extends Migration
         $table->string('oropfafns2')->nullable();
         $table->string('oropfafns3')->nullable();
         $table->string('oropfafns4')->nullable();
-		$table->string('sopcctvr');
+		$table->string('sopcctvr')->nullable();
         $table->string('sopcctvr2')->default('N/A')->nullable();
         $table->string('sopcctvr3')->default('N/A')->nullable();
         $table->string('sopcctvr4')->default('N/A')->nullable();
