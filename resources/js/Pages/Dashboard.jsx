@@ -619,6 +619,7 @@ export default function Dashboard({ auth, assessments }) {
       />
     </div>
 
+    {trainingStatus === "non-scholar" && (
     <div className="flex flex-col">
       <label className="block text-gray-700 mb-1">Official Receipt of Payment for Assessment for Non-Scholar:</label>
       <input
@@ -629,6 +630,7 @@ export default function Dashboard({ auth, assessments }) {
         onChange={handleFileChange}
       />
     </div>
+  )}
 
     <div className="flex flex-col">
       <label className="block text-gray-700 mb-1">Submission of Previous CCTV Recordings:</label>
@@ -693,6 +695,7 @@ export default function Dashboard({ auth, assessments }) {
       />
     </div>
 
+    {trainingStatus2 === "non-scholar" && (
     <div className="flex flex-col">
       <label className="block text-gray-700 mb-1">Official Receipt of Payment for Assessment for Non-Scholar 2:</label>
       <input
@@ -703,6 +706,7 @@ export default function Dashboard({ auth, assessments }) {
         onChange={handleFileChange2}
       />
     </div>
+  )}
 
     <div className="flex flex-col">
       <label className="block text-gray-700 mb-1">Submission of Previous CCTV Recordings 2:</label>
@@ -765,6 +769,7 @@ export default function Dashboard({ auth, assessments }) {
       />
     </div>
 
+    {trainingStatus3 === "non-scholar" && (
     <div className="flex flex-col">
       <label className="block text-gray-700 mb-1">Official Receipt of Payment for Assessment for Non-Scholar 3:</label>
       <input
@@ -775,6 +780,7 @@ export default function Dashboard({ auth, assessments }) {
         onChange={handleFileChange3}
       />
     </div>
+  )}
 
     <div className="flex flex-col">
       <label className="block text-gray-700 mb-1">Submission of Previous CCTV Recordings 3:</label>
@@ -837,6 +843,7 @@ export default function Dashboard({ auth, assessments }) {
       />
     </div>
 
+    {trainingStatus4 === "non-scholar" && (
     <div className="flex flex-col">
       <label className="block text-gray-700 mb-1">Official Receipt of Payment for Assessment for Non-Scholar 4:</label>
       <input
@@ -847,6 +854,8 @@ export default function Dashboard({ auth, assessments }) {
         onChange={handleFileChange4}
       />
     </div>
+    )}
+
 
     <div className="flex flex-col">
       <label className="block text-gray-700 mb-1">Submission of Previous CCTV Recordings 4:</label>
