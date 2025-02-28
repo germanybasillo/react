@@ -569,16 +569,17 @@ export default function Dashboard({ auth, assessments }) {
   </div>
 
   {/* PDF Preview Section */}
+  <div className="w-full lg:w-1/2 p-4 bg-blue-500 shadow-md rounded-lg">
+  <h2 className="text-lg font-semibold text-white mb-2">PDF Preview:</h2>
   {pdfFile && (
-    <div className="w-full lg:w-1/2 p-4 bg-white shadow-md rounded-lg">
-      <h2 className="text-lg font-semibold text-gray-700 mb-2">PDF Preview:</h2>
       <embed
         src={pdfFile}
         type="application/pdf"
         className="w-full h-[400px] lg:h-[600px] border rounded-lg"
       />
-    </div>
+   
   )}
+    </div>
 </div>
 
   
