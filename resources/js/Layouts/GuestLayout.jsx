@@ -5,7 +5,8 @@ export default function Guest({ children }) {
     return (
         <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
              {/* FLEX CONTAINER TO ALIGN LOGOS & FORM */}
-            <div className="flex flex-col items-center self-end mr-10">  
+            <div className="flex flex-col items-center">  
+            {/* <div className="flex flex-col items-center self-end mr-10">   */}
                 {/* LOGO SECTION - Centered Above Form */}
                 {/* <Link href="/" className="flex items-center justify-center space-x-4 mb-4"> */}
                 <div className="flex items-center justify-center space-x-4 mb-4">

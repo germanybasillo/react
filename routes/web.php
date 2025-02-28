@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Models\Assessment; // Ensure this is at the top
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +27,10 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    $assessments = Assessment::paginate(10); // 10 items per page
+    return inertia('Dashboard', [
+        'assessments' => $assessments
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/assessment', function () {
